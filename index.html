@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<title>Heaton Open Mixed Doubles 2026 - Live</title>
+<style>
+  :root {
+    --bg: #f1f5f9; --card: #ffffff; --ink: #0f172a; --muted: #64748b; --line: #e2e8f0;
+    --accent: #16a34a; --accent-ink: #ffffff; --warn-bg: #fef3c7; --warn-ink: #92400e;
+    --me: #dcfce7; --win: #15803d; --loss: #b91c1c; --now: #f59e0b; --gold: #fde68a; --silver: #e2e8f0; --bronze: #fdba74;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a; --card: #1e293b; --ink: #f1f5f9; --muted: #94a3b8; --line: #334155;
+      --accent: #22c55e; --accent-ink: #052e16; --warn-bg: #451a03; --warn-ink: #fde68a;
+      --me: #14532d; --win: #4ade80; --loss: #f87171; --gold: #854d0e; --silver: #475569; --bronze: #9a3412;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  header { background: #0b1220; color: #fff; padding: 14px 16px 10px; }
+  header h1 { margin: 0; font-size: 17px; line-height: 1.2; }
+  header .sub { font-size: 12px; color: #4ade80; margin-top: 2px; }
+  .status { font-size: 11px; color: #94a3b8; margin-top: 6px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; display: inline-block; }
+  .dot.bad { background: #f59e0b; }
+  nav { display: flex; background: #0b1220; position: sticky; top: 0; z-index: 5; border-top: 1px solid #1e293b; }
+  nav button { flex: 1; background: none; border: 0; color: #cbd5e1; font: inherit; font-weight: 600; padding: 11px 4px; border-bottom: 3px solid transparent; cursor: pointer; }
+  nav button.on { color: #fff; border-bottom-color: var(--accent); }
+  main { max-width: 760px; margin: 0 auto; padding: 12px 12px 40px; }
+  .banner { background: var(--warn-bg); color: var(--warn-ink); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; font-size: 13px; font-weight: 600; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 16px 2px 8px; }
+  label.lbl { display: block; font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .05em; }
+  input[type=search], select { width: 100%; padding: 11px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink); font: inherit; }
+  input[type=search] { margin-bottom: 8px; }
+  .seed { display: inline-block; background: var(--ink); color: var(--bg); font-weight: 800; font-size: 12px; padding: 1px 7px; border-radius: 6px; margin-right: 6px; }
+  .pair-name { font-weight: 800; font-size: 18px; margin: 6px 0 2px; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .next { border: 2px solid var(--accent); }
+  .next .big { font-size: 22px; font-weight: 800; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: var(--line); color: var(--ink); text-transform: uppercase; letter-spacing: .04em; }
+  .tag.now { background: var(--now); color: #1c1917; }
+  .tag.w { background: var(--win); color: var(--accent-ink); }
+  .tag.l { background: var(--loss); color: #fff; }
+  .tag.wo { background: #64748b; color: #fff; }
+  .match { display: grid; grid-template-columns: 54px 1fr auto; gap: 8px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+  .match:first-child { border-top: 0; }
+  .match .when { font-weight: 800; font-size: 13px; line-height: 1.2; }
+  .match .when small { display: block; font-weight: 600; color: var(--muted); }
+  .match .opp { font-weight: 700; min-width: 0; overflow-wrap: anywhere; }
+  .match .opp small { display: block; font-weight: 500; color: var(--muted); }
+  .match .res { text-align: right; font-weight: 800; white-space: nowrap; }
+  .match.live { background: color-mix(in srgb, var(--now) 18%, transparent); margin: 0 -12px; padding: 10px 12px; border-radius: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: center; font-size: 11px; text-transform: uppercase; color: var(--muted); padding: 6px 3px; border-bottom: 2px solid var(--line); }
+  td { text-align: center; padding: 8px 3px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  td.nm, th.nm { text-align: left; }
+  td.nm { font-weight: 700; overflow-wrap: anywhere; white-space: normal; }
+  td.nm small { display: block; font-weight: 500; color: var(--muted); font-size: 11px; }
+  td.mp { font-weight: 800; color: var(--accent); font-size: 15px; }
+  tr.me td { background: var(--me); }
+  tr.divider td { border-bottom: 4px solid #facc15; }
+  .grp-title { font-size: 15px; font-weight: 800; margin: 18px 2px 8px; }
+  .grp-title span { background: var(--accent); color: var(--accent-ink); padding: 2px 10px; border-radius: 8px; }
+  .ko { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; margin-bottom: 8px; background: var(--card); }
+  .ko .hd { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+  .ko .row { display: flex; justify-content: space-between; gap: 8px; padding: 2px 0; }
+  .ko .row.w { font-weight: 800; color: var(--win); }
+  .ko .row.me { background: var(--me); border-radius: 6px; padding: 2px 4px; margin: 0 -4px; }
+  .ko .sum { margin-top: 4px; font-size: 12px; font-weight: 700; }
+  .podium { display: grid; gap: 6px; margin-bottom: 8px; }
+  .podium div { border-radius: 8px; padding: 8px 10px; font-weight: 700; }
+  .podium .g { background: var(--gold); } .podium .s { background: var(--silver); } .podium .b { background: var(--bronze); }
+  .empty { text-align: center; color: var(--muted); padding: 30px 10px; }
+  footer { text-align: center; color: var(--muted); font-size: 11px; padding: 0 12px 24px; }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="t-name">Heaton Open Mixed Doubles 2026</h1>
+  <div class="sub" id="t-sub">Live schedule &amp; standings</div>
+  <div class="status"><span class="dot bad" id="dot"></span><span id="updated">Loading...</span></div>
+</header>
+<nav>
+  <button data-tab="me" class="on">My Games</button>
+  <button data-tab="stand">Standings</button>
+  <button data-tab="ko">Knockout</button>
+</nav>
+<main>
+  <div id="banner"></div>
+  <div id="view"></div>
+</main>
+<footer>Results refresh automatically every 30 seconds.</footer>
+
+<script>
+(function () {
+  'use strict';
+  var params = new URLSearchParams(location.search);
+  var DATA_URL = params.get('data') || 'heaton_public_snapshot.json';
+  var REFRESH_MS = 30000;
+  var STALE_MIN = 20;
+  var LS_PAIR = 'heaton_public_pair_2026';
+
+  var snap = null, lastOk = 0, failing = false;
+  var tab = (location.hash || '').replace('#', '') || 'me';
+  var pairId = params.get('pair') || lsGet(LS_PAIR) || '';
+  var search = '';
+
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function esc(s) { return String(s === null || s === undefined ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function $(id) { return document.getElementById(id); }
+
+  function mins(t) {
+    var m = /^(\d{1,2}):(\d{2})\s*([AP]M)?$/i.exec(t || '');
+    if (!m) return 99999;
+    var h = parseInt(m[1], 10), mi = parseInt(m[2], 10), ap = (m[3] || '').toUpperCase();
+    if (ap === 'PM' && h < 12) h += 12;
+    if (ap === 'AM' && h === 12) h = 0;
+    if (!ap && h >= 1 && h <= 6) h += 12;
+    return h * 60 + mi;
+  }
+
+  var pairsById = {};
+  function index() {
+    pairsById = {};
+    (snap.pairs || []).forEach(function (p) { pairsById[p.id] = p; });
+  }
+  function nm(id) {
+    if (id === 'BYE') return 'BYE';
+    var p = pairsById[id];
+    return p ? p.f + ' & ' + p.m : 'To be decided';
+  }
+  function seedOf(id) { var p = pairsById[id]; return p ? '#' + p.seed : ''; }
+
+  // ---------- data loading ----------
+  function load() {
+    fetch(DATA_URL + (DATA_URL.indexOf('?') < 0 ? '?' : '&') + 't=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (j) {
+        if (!j || !j.pairs || !j.matches) throw new Error('Unexpected data');
+        snap = j; lastOk = Date.now(); failing = false; index(); render();
+      })
+      .catch(function () { failing = true; renderStatus(); if (!snap) $('view').innerHTML = '<div class="empty">Waiting for the first results to be published...<br>This page will fill in automatically.</div>'; });
+  }
+
+  function fmtTime(iso) {
+    try { return new Date(iso).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; }
+  }
+
+  function renderStatus() {
+    var dot = $('dot'), up = $('updated'), ban = $('banner');
+    if (!snap) { up.textContent = failing ? 'Waiting for results...' : 'Loading...'; dot.className = 'dot bad'; return; }
+    var ageMin = (Date.now() - new Date(snap.generatedAt).getTime()) / 60000;
+    var stale = isNaN(ageMin) ? false : ageMin > STALE_MIN;
+    up.textContent = 'Last updated ' + fmtTime(snap.generatedAt) + (failing ? ' (cannot refresh right now)' : '');
+    dot.className = 'dot' + ((failing || stale) ? ' bad' : '');
+    var msgs = [];
+    if (failing) msgs.push('Connection problem - showing the last results we received.');
+    if (stale) msgs.push('These results were published more than ' + STALE_MIN + ' minutes ago and may be out of date. Check with the organisers.');
+    ban.innerHTML = msgs.map(function (m) { return '<div class="banner">' + esc(m) + '</div>'; }).join('');
+  }
+
+  // ---------- my games ----------
+  function resultFor(m, id) {
+    var mine = m.a === id ? m.sa : m.sb, theirs = m.a === id ? m.sb : m.sa;
+    if (m.st !== 'Completed') return { text: m.st === 'On Court' ? 'ON COURT' : '', cls: m.st === 'On Court' ? 'now' : '' };
+    if (m.wo) {
+      if (!m.w) return { text: 'Walkover', cls: 'wo' };
+      return m.w === id ? { text: 'Walkover win', cls: 'w' } : { text: 'Walkover loss', cls: 'l' };
+    }
+    if (mine === null || theirs === null || mine === undefined) return { text: 'Done', cls: '' };
+    return { text: (mine > theirs ? 'Won ' : 'Lost ') + mine + '-' + theirs, cls: mine > theirs ? 'w' : 'l' };
+  }
+
+  function koMatchesFor(id) {
+    var out = [];
+    if (!snap.knockout) return out;
+    snap.knockout.groups.forEach(function (g) {
+      ['QF', 'SF', 'Medals'].forEach(function (r) {
+        (g[r] || []).forEach(function (k) { if (k.a === id || k.b === id) out.push({ g: g, k: k }); });
+      });
+    });
+    return out;
+  }
+
+  function viewMe() {
+    var pairs = (snap.pairs || []).slice().sort(function (a, b) { return a.seed - b.seed; });
+    var q = search.trim().toLowerCase();
+    var opts = pairs.filter(function (p) { return !q || (p.f + ' ' + p.m).toLowerCase().indexOf(q) >= 0 || String(p.seed) === q || p.id === pairId; })
+      .map(function (p) { return '<option value="' + esc(p.id) + '"' + (p.id === pairId ? ' selected' : '') + '>#' + p.seed + ' ' + esc(p.f) + ' &amp; ' + esc(p.m) + '</option>'; }).join('');
+    var h = '<div class="card"><label class="lbl" for="q">Find your pair</label>' +
+      '<input type="search" id="q" placeholder="Type your name or seed number" value="' + esc(search) + '" autocomplete="off">' +
+      '<select id="sel"><option value="">- Choose your pair -</option>' + opts + '</select></div>';
+
+    var p = pairsById[pairId];
+    if (!p) {
+      $('view').innerHTML = h + '<div class="empty">Choose your pair above to see your match times and courts.</div>';
+      bind(); return;
+    }
+
+    var st = (snap.standings || []).filter(function (s) { return s.id === p.id; })[0];
+    h += '<div class="card"><span class="seed">Seed #' + p.seed + '</span>' + (p.wd ? '<span class="tag l">Withdrawn</span>' : '') +
+      '<div class="pair-name">' + esc(p.f) + ' &amp; ' + esc(p.m) + '</div>' +
+      (st ? '<div class="muted">League position <strong>#' + st.rank + '</strong> &middot; ' + st.mp + ' match points &middot; ' + st.w + ' won, ' + st.l + ' lost &middot; points diff ' + (st.d > 0 ? '+' + st.d : st.d) + '</div>' : '<div class="muted">Not currently in the league table.</div>') + '</div>';
+
+    var mine = snap.matches.filter(function (m) { return m.a === p.id || m.b === p.id; })
+      .sort(function (a, b) { return (a.r - b.r) || (mins(a.t) - mins(b.t)); });
+    var ko = koMatchesFor(p.id);
+
+    // next match to play (Phase 1 first, then knockout)
+    var nextP1 = mine.filter(function (m) { return m.st !== 'Completed'; })[0];
+    var nextKo = ko.filter(function (x) { return x.k.st !== 'Completed' && x.k.a && x.k.b && x.k.a !== 'BYE' && x.k.b !== 'BYE'; })
+      .sort(function (a, b) { return mins(a.k.t) - mins(b.k.t); })[0];
+    if (nextP1 && !p.wd) {
+      var o = nextP1.a === p.id ? nextP1.b : nextP1.a;
+      h += '<div class="card next"><div class="muted" style="font-weight:700;text-transform:uppercase">Your next match' + (nextP1.st === 'On Court' ? ' &middot; <span class="tag now">On court now</span>' : '') + '</div>' +
+        '<div class="big">' + esc(nextP1.t) + ' &middot; Court ' + esc(nextP1.c) + '</div>' +
+        '<div>Round ' + nextP1.r + ' vs <strong>' + esc(nm(o)) + '</strong> <span class="muted">' + seedOf(o) + '</span></div></div>';
+    } else if (nextKo && !p.wd) {
+      var ko2 = nextKo.k, o2 = ko2.a === p.id ? ko2.b : ko2.a;
+      h += '<div class="card next"><div class="muted" style="font-weight:700;text-transform:uppercase">Your next match &middot; Knockout</div>' +
+        '<div class="big">' + (ko2.t ? esc(ko2.t) + ' &middot; Court ' + esc(ko2.c) : 'Time to be confirmed') + '</div>' +
+        '<div>' + esc(ko2.label) + ' vs <strong>' + esc(nm(o2)) + '</strong></div></div>';
+    }
+
+    h += '<h2>Phase 1 matches</h2><div class="card">';
+    if (!mine.length) h += '<div class="muted">No Phase 1 matches found.</div>';
+    mine.forEach(function (m) {
+      var o = m.a === p.id ? m.b : m.a, r = resultFor(m, p.id);
+      h += '<div class="match' + (m.st === 'On Court' ? ' live' : '') + '"><div class="when">' + esc(m.t) + '<small>Court ' + esc(m.c) + '</small></div>' +
+        '<div class="opp">R' + m.r + ' &middot; ' + esc(nm(o)) + '<small>Seed ' + seedOf(o) + '</small></div>' +
+        '<div class="res">' + (r.text ? '<span class="tag ' + r.cls + '">' + esc(r.text) + '</span>' : '') + '</div></div>';
+    });
+    h += '</div>';
+
+    if (ko.length) {
+      h += '<h2>Knockout</h2><div class="card">';
+      ko.forEach(function (x) {
+        var k = x.k, o = k.a === p.id ? k.b : k.a, res = '';
+        if (k.st === 'Completed' && k.win) res = k.win === p.id ? '<span class="tag w">Won ' + esc(k.sum || '') + '</span>' : '<span class="tag l">Lost ' + esc(k.sum || '') + '</span>';
+        h += '<div class="match"><div class="when">' + (k.t ? esc(k.t) + '<small>Court ' + esc(k.c) + '</small>' : 'TBC') + '</div>' +
+          '<div class="opp">' + esc(k.label) + '<small>vs ' + esc(nm(o)) + '</small></div><div class="res">' + res + '</div></div>';
+      });
+      h += '</div>';
+    }
+    $('view').innerHTML = h;
+    bind();
+  }
+
+  // ---------- standings ----------
+  function viewStand() {
+    var rows = snap.standings || [];
+    if (!rows.length) { $('view').innerHTML = '<div class="empty">No standings yet.</div>'; return; }
+    var h = '<div class="card" style="padding:6px 8px"><table><thead><tr><th>#</th><th class="nm">Pair</th><th>P</th><th>W-L</th><th>PF</th><th>PA</th><th>+/-</th><th>MP</th></tr></thead><tbody>';
+    rows.forEach(function (s, i) {
+      var p = pairsById[s.id] || { f: '?', m: '?', seed: '' };
+      var div = ((i + 1) % 8 === 0 && i + 1 <= 32 && i + 1 < rows.length) ? ' divider' : '';
+      h += '<tr class="' + (s.id === pairId ? 'me' : '') + div + '"><td><strong>' + s.rank + '</strong></td><td class="nm">' + esc(p.f) + ' &amp; ' + esc(p.m) + '<small>Seed #' + esc(p.seed) + '</small></td>' +
+        '<td>' + s.p + '</td><td>' + s.w + '-' + s.l + '</td><td>' + s.pf + '</td><td>' + s.pa + '</td><td>' + (s.d > 0 ? '+' + s.d : s.d) + '</td><td class="mp">' + s.mp + '</td></tr>';
+    });
+    h += '</tbody></table></div><div class="muted" style="padding:0 4px">Match points: 2 for a win, 1 for a loss scoring 6 or more. Yellow lines separate the knockout groups of 8 pairs. Ties are split on wins, points difference, then points scored.</div>';
+    $('view').innerHTML = h;
+  }
+
+  // ---------- knockout ----------
+  function koCard(k) {
+    var aW = k.win && k.win === k.a, bW = k.win && k.win === k.b;
+    function row(id, win, score) {
+      return '<div class="row' + (win ? ' w' : '') + (id === pairId ? ' me' : '') + '"><span>' + esc(nm(id)) + '</span><span>' + (score !== null && score !== undefined && k.st === 'Completed' && !k.bo3 ? score : '') + '</span></div>';
+    }
+    var when = k.t ? 'Court ' + esc(k.c) + ' &middot; ' + esc(k.t) : 'Not yet scheduled';
+    var sum = k.st === 'Completed' ? (k.sum || '') : (k.st === 'On Court' ? 'ON COURT NOW' : '');
+    return '<div class="ko"><div class="hd"><span>' + esc(k.label) + '</span><span>' + when + '</span></div>' + row(k.a, aW, k.sa) + row(k.b, bW, k.sb) + (sum ? '<div class="sum">' + esc(sum) + '</div>' : '') + '</div>';
+  }
+
+  function viewKo() {
+    if (!snap.knockout || !snap.knockout.groups || !snap.knockout.groups.length) {
+      $('view').innerHTML = '<div class="empty">The knockout phase has not been drawn yet.<br>It starts once Phase 1 is finished.</div>'; return;
+    }
+    var h = '';
+    snap.knockout.groups.forEach(function (g) {
+      h += '<div class="grp-title"><span>' + esc(g.name) + '</span></div>';
+      var md = g.medals || {};
+      if (md.gold || md.silver || md.bronze) {
+        h += '<div class="podium">' +
+          (md.gold ? '<div class="g">&#129351; Gold: ' + esc(nm(md.gold)) + '</div>' : '') +
+          (md.silver ? '<div class="s">&#129352; Silver: ' + esc(nm(md.silver)) + '</div>' : '') +
+          (md.bronze ? '<div class="b">&#129353; Bronze: ' + esc(nm(md.bronze)) + '</div>' : '') + '</div>';
+      }
+      [['Quarter-finals', 'QF'], ['Semi-finals', 'SF'], ['Medal matches', 'Medals']].forEach(function (r) {
+        var list = (g[r[1]] || []).filter(function (k) { return k.a !== 'BYE' && k.b !== 'BYE'; });
+        if (!list.length) return;
+        h += '<h2>' + r[0] + '</h2>' + list.map(koCard).join('');
+      });
+    });
+    $('view').innerHTML = h;
+  }
+
+  // ---------- plumbing ----------
+  function bind() {
+    var sel = $('sel'), q = $('q');
+    if (sel) sel.onchange = function () { pairId = sel.value; lsSet(LS_PAIR, pairId); render(); };
+    if (q) q.oninput = function () {
+      search = q.value;
+      var pos = q.selectionStart;
+      render();
+      var nq = $('q'); if (nq) { nq.focus(); try { nq.setSelectionRange(pos, pos); } catch (e) {} }
+    };
+  }
+
+  function render() {
+    renderStatus();
+    if (!snap) return;
+    $('t-name').textContent = (snap.tournament && snap.tournament.name) || 'Heaton Open Mixed Doubles';
+    $('t-sub').textContent = [(snap.tournament && snap.tournament.venue), (snap.tournament && snap.tournament.date)].filter(Boolean).join(' - ') || 'Live schedule & standings';
+    document.querySelectorAll('nav button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-tab') === tab); });
+    if (tab === 'stand') viewStand(); else if (tab === 'ko') viewKo(); else viewMe();
+  }
+
+  document.querySelectorAll('nav button').forEach(function (b) {
+    b.onclick = function () { tab = b.getAttribute('data-tab'); location.hash = tab; window.scrollTo(0, 0); render(); };
+  });
+
+  load();
+  setInterval(load, REFRESH_MS);
+  setInterval(renderStatus, 15000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) load(); });
+})();
+</script>
+</body>
+</html>
